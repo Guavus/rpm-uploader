@@ -18,7 +18,7 @@ def do_upload():
         response.status = 400
         return dict(message='Missing parameters')
 
-    output_dir = os.path.join(configs['output_dir'], project, *branch.split('/'))
+    output_dir = os.path.join(configs['output_dir'], *project.split('/'))
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
     file_path = os.path.join(output_dir, data.filename)
