@@ -7,6 +7,10 @@ import argparse
 import socket
 from bottle import route, request, response, run
 
+pyversion = sys.version_info[:2]
+if pyversion < (3, ):
+    from __future__ import (absolute_import, division, print_function, unicode_literals)
+
 configs={}
 
 @route('/upload', method='POST')
@@ -46,6 +50,7 @@ def upload():
     return dict(result="Success", message="Ok")
     
 def main():
+    global configs
     parser = argparse.ArgumentParser()
     parser.add_argument('--output-dir')
     parser.add_argument('--port', default='1234', type=int)
