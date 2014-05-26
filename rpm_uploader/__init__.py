@@ -38,7 +38,7 @@ def upload():
 
         # Print
         if configs['verbose']:
-            print("Uploading file(s) %s to folder " % (data.filename, output_dir))
+            print("Uploading file(s) %s to folder %s." % (data.filename, output_dir))
 
         # Save file
         data.save(file_path)
