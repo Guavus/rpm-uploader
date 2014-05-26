@@ -1,15 +1,14 @@
 #!/usr/bin/python
-import os
+
+from __future__ import (absolute_import, division, print_function, unicode_literals)
 import sys
+import os
 import json
 import subprocess
 import argparse
 import socket
 from bottle import route, request, response, run
 
-pyversion = sys.version_info[:2]
-if pyversion < (3, ):
-    from __future__ import (absolute_import, division, print_function, unicode_literals)
 
 configs={}
 
@@ -19,9 +18,9 @@ def upload():
     input_data_files = request.files.getall('data')
     project = request.query.get('dir', '')
 
-    if len(input_data_files) > 0:
+    if len(input_data_files) <= 0:
         if configs['verbose']:
-            print 'No file specified to upload'
+            print('No file specified to upload')
         response.status = 400
         return dict(message='No file specified to upload')
 
@@ -33,13 +32,13 @@ def upload():
         file_path = os.path.join(output_dir, data.filename)
         if os.path.exists(file_path):
             if configs['verbose']:
-                print 'File already exists.'
+                print('File already exists.')
             response.status = 400
             return dict(message='File ' + file_path + ' already exists. Will not overwrite')
 
         # Print
         if configs['verbose']:
-            print "Uploading file(s) %s to folder " % (data.filename, output_dir)
+            print("Uploading file(s) %s to folder " % (data.filename, output_dir))
 
         # Save file
         data.save(file_path)
@@ -62,7 +61,7 @@ def main():
     configs = vars(parser.parse_args(sys.argv[1:]))
 
     #Run server
-    print "Starting on port %s. Will save in %s and run %s in repo." % (configs['port'], configs['output_dir'], configs['createrepo'])
+    print("Starting on port %s. Will save in %s and run %s in repo." % (configs['port'], configs['output_dir'], configs['createrepo']))
     run(host=socket.gethostname(), port=configs['port'])
 
 if __name__ == '__main__':
