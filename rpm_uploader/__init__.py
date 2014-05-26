@@ -5,12 +5,12 @@ import json
 import subprocess
 import argparse
 import socket
-from bottle import route, request, static_file, run, response
+from bottle import route, request, response, run
 
 configs={}
 
 @route('/upload', method='POST')
-def do_upload():
+def upload():
     global configs
     data = request.files.data
     project = request.query.get('dir')
@@ -30,7 +30,7 @@ def do_upload():
     data.save(file_path)
 
     # Update repo
-    subprocess.call([configs['createrepo'], '-p', '--update', output_dir])
+    subprocess.call(configs['createrepo'].split(" ") + [output_dir])
 
     return dict(result="Success", message="Ok")
     
@@ -38,7 +38,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--output-dir')
     parser.add_argument('--port', default='1234', type=int)
-    parser.add_argument('--createrepo', default='/usr/bin/createrepo')
+    parser.add_argument('--createrepo', default='/usr/bin/createrepo -p --update')
     configs = vars(parser.parse_args(sys.argv[1:]))
 
     #Run server
