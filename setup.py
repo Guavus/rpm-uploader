@@ -21,7 +21,7 @@ setup(
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # http://packaging.python.org/en/latest/tutorial.html#version
-    version='0.2',
+    version='0.2.1',
 
     description="A tool to upload rpms into repositories.",
     long_description=long_description,
