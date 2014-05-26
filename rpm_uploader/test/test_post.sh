@@ -1,2 +1,2 @@
 #!/bin/sh
-curl -i -F data=@test_post.sh "http://$(hostname):1234/upload?project=care-reflex&branch=release/1.2.3"
+curl -i -F data=@test_post.sh data=@test_server.sh "http://$(hostname):1234/upload?dir=care-reflex/release/1.2.3"
